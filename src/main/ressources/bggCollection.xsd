@@ -1,0 +1,53 @@
+<xs:schema attributeFormDefault="unqualified" elementFormDefault="qualified" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+  <xs:element name="items">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element name="item" maxOccurs="unbounded" minOccurs="0">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="name">
+                <xs:complexType>
+                  <xs:simpleContent>
+                    <xs:extension base="xs:string">
+                      <xs:attribute type="xs:short" name="sortindex" use="optional"/>
+                    </xs:extension>
+                  </xs:simpleContent>
+                </xs:complexType>
+              </xs:element>
+              <xs:element type="xs:short" name="yearpublished"/>
+              <xs:element type="xs:string" name="image" minOccurs="0"/>
+              <xs:element type="xs:string" name="thumbnail" minOccurs="0"/>
+              <xs:element name="status">
+                <xs:complexType>
+                  <xs:simpleContent>
+                    <xs:extension base="xs:string">
+                      <xs:attribute type="xs:short" name="own" use="optional"/>
+                      <xs:attribute type="xs:short" name="prevowned" use="optional"/>
+                      <xs:attribute type="xs:short" name="fortrade" use="optional"/>
+                      <xs:attribute type="xs:short" name="want" use="optional"/>
+                      <xs:attribute type="xs:short" name="wanttoplay" use="optional"/>
+                      <xs:attribute type="xs:short" name="wanttobuy" use="optional"/>
+                      <xs:attribute type="xs:short" name="wishlist" use="optional"/>
+                      <xs:attribute type="xs:short" name="preordered" use="optional"/>
+                      <xs:attribute type="xs:string" name="lastmodified" use="optional"/>
+                      <xs:attribute type="xs:short" name="wishlistpriority" use="optional"/>
+                    </xs:extension>
+                  </xs:simpleContent>
+                </xs:complexType>
+              </xs:element>
+              <xs:element type="xs:short" name="numplays"/>
+              <xs:element type="xs:string" name="comment" minOccurs="0"/>
+            </xs:sequence>
+            <xs:attribute type="xs:string" name="objecttype" use="optional"/>
+            <xs:attribute type="xs:int" name="objectid" use="optional"/>
+            <xs:attribute type="xs:string" name="subtype" use="optional"/>
+            <xs:attribute type="xs:int" name="collid" use="optional"/>
+          </xs:complexType>
+        </xs:element>
+      </xs:sequence>
+      <xs:attribute type="xs:short" name="totalitems"/>
+      <xs:attribute type="xs:string" name="termsofuse"/>
+      <xs:attribute type="xs:string" name="pubdate"/>
+    </xs:complexType>
+  </xs:element>
+</xs:schema>
