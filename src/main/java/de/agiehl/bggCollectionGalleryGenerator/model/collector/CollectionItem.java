@@ -35,7 +35,7 @@ public class CollectionItem {
 	private String thumbnailUrl;
 
 	@XmlElement(required = false)
-	private String status;
+	private CollectionItemStatus status;
 
 	@XmlElement(required = false)
 	private int numplays;
@@ -75,7 +75,7 @@ public class CollectionItem {
 		return year;
 	}
 
-	public String getStatus() {
+	public CollectionItemStatus getStatus() {
 		return status;
 	}
 
@@ -96,11 +96,15 @@ public class CollectionItem {
 			return false;
 		}
 		CollectionItem that = (CollectionItem) o;
-		return id == that.id && collectionId == that.collectionId && numplays == that.numplays
-				&& Objects.equals(type, that.type) && Objects.equals(subtype, that.subtype)
-				&& Objects.equals(name, that.name) && Objects.equals(year, that.year)
-				&& Objects.equals(imageUrl, that.imageUrl) && Objects.equals(thumbnailUrl, that.thumbnailUrl)
-				&& Objects.equals(status, that.status) && Objects.equals(comment, that.comment);
+		return id == that.id;
+		/*
+		 * && collectionId == that.collectionId && numplays == that.numplays &&
+		 * Objects.equals(type, that.type) && Objects.equals(subtype, that.subtype) &&
+		 * Objects.equals(name, that.name) && Objects.equals(year, that.year) &&
+		 * Objects.equals(imageUrl, that.imageUrl) && Objects.equals(thumbnailUrl,
+		 * that.thumbnailUrl) && Objects.equals(status, that.status) &&
+		 * Objects.equals(comment, that.comment);
+		 */
 	}
 
 	@Override
