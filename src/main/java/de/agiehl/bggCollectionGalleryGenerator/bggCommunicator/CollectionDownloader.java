@@ -10,7 +10,7 @@ import org.springframework.stereotype.Component;
 import org.springframework.web.client.RestClientException;
 import org.springframework.web.client.RestTemplate;
 
-import de.agiehl.bggCollectionGalleryGenerator.model.collector.UserCollection;
+import de.agiehl.bggCollectionGalleryGenerator.model.collection.UserCollection;
 
 @Component
 public class CollectionDownloader {

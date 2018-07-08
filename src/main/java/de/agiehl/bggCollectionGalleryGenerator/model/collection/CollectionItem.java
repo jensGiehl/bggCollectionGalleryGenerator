@@ -1,4 +1,4 @@
-package de.agiehl.bggCollectionGalleryGenerator.model.collector;
+package de.agiehl.bggCollectionGalleryGenerator.model.collection;
 
 import java.util.Objects;
 

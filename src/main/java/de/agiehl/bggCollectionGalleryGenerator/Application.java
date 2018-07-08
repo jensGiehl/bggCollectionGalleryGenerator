@@ -12,7 +12,7 @@ import org.springframework.util.StringUtils;
 import de.agiehl.bggCollectionGalleryGenerator.bggCommunicator.CollectionDownloader;
 import de.agiehl.bggCollectionGalleryGenerator.ftp.FileUploader;
 import de.agiehl.bggCollectionGalleryGenerator.galleryGenerator.GalleryGenerator;
-import de.agiehl.bggCollectionGalleryGenerator.model.collector.UserCollection;
+import de.agiehl.bggCollectionGalleryGenerator.model.collection.UserCollection;
 
 @SpringBootApplication
 public class Application implements CommandLineRunner {

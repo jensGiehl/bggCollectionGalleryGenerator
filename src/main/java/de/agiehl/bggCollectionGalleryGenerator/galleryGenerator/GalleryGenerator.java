@@ -17,8 +17,8 @@ import org.thymeleaf.context.Context;
 
 import com.googlecode.htmlcompressor.compressor.HtmlCompressor;
 
-import de.agiehl.bggCollectionGalleryGenerator.model.collector.CollectionItem;
-import de.agiehl.bggCollectionGalleryGenerator.model.collector.UserCollection;
+import de.agiehl.bggCollectionGalleryGenerator.model.collection.CollectionItem;
+import de.agiehl.bggCollectionGalleryGenerator.model.collection.UserCollection;
 
 @Component
 public class GalleryGenerator {
