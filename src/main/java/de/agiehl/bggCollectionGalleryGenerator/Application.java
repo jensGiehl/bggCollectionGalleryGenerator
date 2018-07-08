@@ -30,6 +30,7 @@ public class Application implements CommandLineRunner {
 	private String bggUsername;
 
 	@Override
+	// TODO: banner.txt
 	public void run(String... args) throws Exception {
 		if (StringUtils.isEmpty(bggUsername)) {
 			throw new IllegalArgumentException("bgg.username should not be empty");
