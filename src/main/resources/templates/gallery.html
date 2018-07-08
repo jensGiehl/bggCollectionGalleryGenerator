@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+	<head>
+		<meta charset="UTF-8">
+		<meta name="author" content="Jens Giehl">
+		<meta name="date" th:content="${date}">
+		<meta name='keywords' th:content="#{html.keywords(${username})}">
+		<meta name='description' th:content="#{html.description(${username})}">
+		<meta name='language' content='EN'>
+		<title th:text="#{html.title(${username})}"></title>
+		
+		<link rel="stylesheet" href="css/blueimp-gallery.min.css">
+		<link rel="stylesheet" href="css/custom.css">
+	</head>
+	<body>
+		<div id="blueimp-gallery-carousel" class="blueimp-gallery blueimp-gallery-carousel">
+		    <div class="slides"></div>
+		    <h3 class="title"></h3>
+		</div>
+		
+		<div id="links">
+			<th:block th:each="item : ${collection}">
+		    	<a th:href="${item.imageUrl}" th:title="${item.name}"></a>
+		    </th:block>
+		</div>
+		
+		<script src="js/blueimp-gallery.min.js"></script>	
+		<script>
+			blueimp.Gallery(
+			    document.getElementById('links').getElementsByTagName('a'),
+			    {
+			        container: '#blueimp-gallery-carousel',
+			        carousel: true,
+					hidePageScrollbars: true,
+					toggleControlsOnReturn: true,
+					toggleSlideshowOnSpace: true,
+					enableKeyboardNavigation: true,
+					closeOnEscape: false,
+					closeOnSlideClick: false,
+					closeOnSwipeUpOrDown: false,
+					disableScroll: true,
+					startSlideshow: true
+			    }
+			);		
+		</script>
+	</body>
+</html>
