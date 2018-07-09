@@ -9,6 +9,8 @@ import java.util.Locale;
 import java.util.function.Predicate;
 import java.util.stream.Collectors;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.util.StringUtils;
@@ -26,17 +28,18 @@ public class GalleryGenerator {
 	@Autowired
 	private TemplateEngine templateEngine;
 
+	private static final Logger logger = LoggerFactory.getLogger(GalleryGenerator.class);
+
 	public File generateHtmlForCollection(UserCollection collection) {
-		Context ctx = new Context(Locale.ENGLISH);
-		ctx.setVariable("username", collection.getUsername());
-		ctx.setVariable("date", collection.getPubDate());
-		ctx.setVariable("collection", getOwnedItems(collection));
+		String htmlAsString = generateHtml(collection);
 
-		String htmlAsString = templateEngine.process("gallery.html", ctx);
+		htmlAsString = compressHtml(htmlAsString);
 
-		HtmlCompressor compressor = new HtmlCompressor();
-		htmlAsString = compressor.compress(htmlAsString);
+		File tmpFile = writeHtmlToTempFile(htmlAsString);
+		return tmpFile; // TODO: Optional
+	}
 
+	private File writeHtmlToTempFile(String htmlAsString) {
 		File tmpFile = null;
 		PrintWriter out = null;
 		try {
@@ -45,14 +48,30 @@ public class GalleryGenerator {
 			out = new PrintWriter(tmpFile);
 			out.println(htmlAsString);
 		} catch (IOException e) {
-			e.printStackTrace();
+			logger.error("Error while writing HTML to file (" + tmpFile + ")", e);
 		} finally {
 			// TODO: autocloseable
 			if (out != null) {
 				out.close();
 			}
 		}
-		return tmpFile; // TODO: Optional
+		return tmpFile;
+	}
+
+	private String generateHtml(UserCollection collection) {
+		Context ctx = new Context(Locale.ENGLISH);
+		ctx.setVariable("username", collection.getUsername());
+		ctx.setVariable("date", collection.getPubDate());
+		ctx.setVariable("collection", getOwnedItems(collection));
+
+		String htmlAsString = templateEngine.process("gallery.html", ctx);
+		return htmlAsString;
+	}
+
+	private String compressHtml(String htmlAsString) {
+		HtmlCompressor compressor = new HtmlCompressor();
+		htmlAsString = compressor.compress(htmlAsString);
+		return htmlAsString;
 	}
 
 	private List<CollectionItem> getOwnedItems(UserCollection collection) {
