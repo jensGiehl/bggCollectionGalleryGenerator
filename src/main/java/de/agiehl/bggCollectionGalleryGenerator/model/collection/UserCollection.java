@@ -3,6 +3,7 @@ package de.agiehl.bggCollectionGalleryGenerator.model.collection;
 import java.util.List;
 import java.util.Objects;
 
+import com.fasterxml.jackson.dataformat.xml.annotation.JacksonXmlElementWrapper;
 import com.fasterxml.jackson.dataformat.xml.annotation.JacksonXmlProperty;
 import com.fasterxml.jackson.dataformat.xml.annotation.JacksonXmlRootElement;
 
@@ -19,6 +20,7 @@ public class UserCollection {
 	private String pubDate;
 
 	@JacksonXmlProperty(localName = "item", isAttribute = false)
+	@JacksonXmlElementWrapper(useWrapping = false)
 	private List<CollectionItem> items;
 
 	private String username;

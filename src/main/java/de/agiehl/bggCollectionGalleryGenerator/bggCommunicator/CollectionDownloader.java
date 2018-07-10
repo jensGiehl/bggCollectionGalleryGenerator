@@ -55,7 +55,7 @@ public class CollectionDownloader {
 			if (retryCount <= maxRetries) {
 				try {
 					ObjectMapper xmlMapper = new XmlMapper();
-					xmlMapper.configure(FAIL_ON_UNKNOWN_PROPERTIES, false);
+					xmlMapper.disable(FAIL_ON_UNKNOWN_PROPERTIES);
 					ErrorObject error = xmlMapper.readValue(response.getBody(), ErrorObject.class);
 					logger.info("Response message form bgg: {}", error.getMessage());
 				} catch (IOException e) {

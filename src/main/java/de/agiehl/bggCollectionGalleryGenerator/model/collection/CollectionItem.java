@@ -19,10 +19,10 @@ public class CollectionItem {
 	private long collectionId;
 
 	@JacksonXmlProperty(localName = "name", isAttribute = false)
-	private CollectionsItemName name;
+	private String name;
 
 	@JacksonXmlProperty(localName = "yearpublished", isAttribute = false)
-	private String year;
+	private Integer year;
 
 	@JacksonXmlProperty(localName = "image", isAttribute = false)
 	private String imageUrl;
@@ -52,7 +52,7 @@ public class CollectionItem {
 	}
 
 	public String getName() {
-		return name.getName();
+		return name;
 	}
 
 	public String getSubtype() {
@@ -67,7 +67,7 @@ public class CollectionItem {
 		return type;
 	}
 
-	public String getYear() {
+	public Integer getYear() {
 		return year;
 	}
 
@@ -97,7 +97,6 @@ public class CollectionItem {
 
 	@Override
 	public int hashCode() {
-		return Objects.hash(type, id, subtype, collectionId, name, year, imageUrl, thumbnailUrl, status, numplays,
-				comment);
+		return Objects.hash(type, id, subtype, collectionId, name, year, imageUrl, thumbnailUrl, numplays, comment);
 	}
 }
