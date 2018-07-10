@@ -1,33 +1,27 @@
 package de.agiehl.bggCollectionGalleryGenerator.model.collection;
 
-import javax.xml.bind.annotation.XmlAccessType;
-import javax.xml.bind.annotation.XmlAccessorType;
-import javax.xml.bind.annotation.XmlAttribute;
+import com.fasterxml.jackson.dataformat.xml.annotation.JacksonXmlProperty;
 
-@XmlAccessorType(XmlAccessType.NONE)
 public class CollectionItemStatus {
 
-	@XmlAttribute(required = false)
+	@JacksonXmlProperty(isAttribute = true)
 	private boolean own;
-	@XmlAttribute(required = false)
+	@JacksonXmlProperty(isAttribute = true)
 	private boolean prevowned;
-	@XmlAttribute(required = false)
+	@JacksonXmlProperty(isAttribute = true)
 	private boolean fortrade;
-	@XmlAttribute(required = false)
+	@JacksonXmlProperty(isAttribute = true)
 	private boolean want;
-	@XmlAttribute(required = false)
+	@JacksonXmlProperty(isAttribute = true)
 	private boolean wanttoplay;
-	@XmlAttribute(required = false)
+	@JacksonXmlProperty(isAttribute = true)
 	private boolean wanttobuy;
-	@XmlAttribute(required = false)
+	@JacksonXmlProperty(isAttribute = true)
 	private boolean wishlist;
-	@XmlAttribute(required = false)
+	@JacksonXmlProperty(isAttribute = true)
 	private boolean preordered;
-	@XmlAttribute(required = false)
+	@JacksonXmlProperty(isAttribute = true)
 	private String lastmodified;
-
-	// own="1" prevowned="0" fortrade="0" want="0" wanttoplay="0" wanttobuy="0"
-	// wishlist="0" preordered="0" lastmodified="2017-11-25 02:40:08"
 
 	public boolean isOwn() {
 		return own;

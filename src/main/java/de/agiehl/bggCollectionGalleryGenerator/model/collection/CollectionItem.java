@@ -2,45 +2,41 @@ package de.agiehl.bggCollectionGalleryGenerator.model.collection;
 
 import java.util.Objects;
 
-import javax.xml.bind.annotation.XmlAccessType;
-import javax.xml.bind.annotation.XmlAccessorType;
-import javax.xml.bind.annotation.XmlAttribute;
-import javax.xml.bind.annotation.XmlElement;
+import com.fasterxml.jackson.dataformat.xml.annotation.JacksonXmlProperty;
 
-@XmlAccessorType(XmlAccessType.NONE)
 public class CollectionItem {
 
-	@XmlAttribute(name = "objecttype", required = false)
+	@JacksonXmlProperty(localName = "objecttype", isAttribute = true)
 	private String type;
 
-	@XmlAttribute(name = "objectid", required = true)
+	@JacksonXmlProperty(localName = "objectid", isAttribute = true)
 	private int id;
 
-	@XmlAttribute(name = "subtype", required = false)
+	@JacksonXmlProperty(localName = "subtype", isAttribute = true)
 	private String subtype;
 
-	@XmlAttribute(name = "collid", required = false)
+	@JacksonXmlProperty(localName = "collid", isAttribute = true)
 	private long collectionId;
 
-	@XmlElement(name = "name", required = false)
-	private String name;
+	@JacksonXmlProperty(localName = "name", isAttribute = false)
+	private CollectionsItemName name;
 
-	@XmlElement(name = "yearpublished", required = false)
+	@JacksonXmlProperty(localName = "yearpublished", isAttribute = false)
 	private String year;
 
-	@XmlElement(name = "image", required = false)
+	@JacksonXmlProperty(localName = "image", isAttribute = false)
 	private String imageUrl;
 
-	@XmlElement(name = "thumbnail", required = false)
+	@JacksonXmlProperty(localName = "thumbnail", isAttribute = false)
 	private String thumbnailUrl;
 
-	@XmlElement(required = false)
+	@JacksonXmlProperty(localName = "status", isAttribute = false)
 	private CollectionItemStatus status;
 
-	@XmlElement(required = false)
+	@JacksonXmlProperty(localName = "numplays", isAttribute = false)
 	private int numplays;
 
-	@XmlElement(required = false)
+	@JacksonXmlProperty(localName = "comment", isAttribute = false)
 	private String comment;
 
 	public long getCollectionId() {
@@ -56,7 +52,7 @@ public class CollectionItem {
 	}
 
 	public String getName() {
-		return name;
+		return name.getName();
 	}
 
 	public String getSubtype() {
@@ -97,14 +93,6 @@ public class CollectionItem {
 		}
 		CollectionItem that = (CollectionItem) o;
 		return id == that.id;
-		/*
-		 * && collectionId == that.collectionId && numplays == that.numplays &&
-		 * Objects.equals(type, that.type) && Objects.equals(subtype, that.subtype) &&
-		 * Objects.equals(name, that.name) && Objects.equals(year, that.year) &&
-		 * Objects.equals(imageUrl, that.imageUrl) && Objects.equals(thumbnailUrl,
-		 * that.thumbnailUrl) && Objects.equals(status, that.status) &&
-		 * Objects.equals(comment, that.comment);
-		 */
 	}
 
 	@Override

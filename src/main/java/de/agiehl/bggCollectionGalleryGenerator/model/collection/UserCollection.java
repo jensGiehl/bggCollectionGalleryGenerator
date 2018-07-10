@@ -3,26 +3,22 @@ package de.agiehl.bggCollectionGalleryGenerator.model.collection;
 import java.util.List;
 import java.util.Objects;
 
-import javax.xml.bind.annotation.XmlAccessType;
-import javax.xml.bind.annotation.XmlAccessorType;
-import javax.xml.bind.annotation.XmlAttribute;
-import javax.xml.bind.annotation.XmlElement;
-import javax.xml.bind.annotation.XmlRootElement;
+import com.fasterxml.jackson.dataformat.xml.annotation.JacksonXmlProperty;
+import com.fasterxml.jackson.dataformat.xml.annotation.JacksonXmlRootElement;
 
-@XmlRootElement(name = "items")
-@XmlAccessorType(XmlAccessType.NONE)
+@JacksonXmlRootElement(localName = "items")
 public class UserCollection {
 
-	@XmlAttribute(name = "items", required = false)
+	@JacksonXmlProperty(localName = "totalitems", isAttribute = true)
 	private int totalItems;
 
-	@XmlAttribute(name = "termsofuse", required = false)
+	@JacksonXmlProperty(localName = "termsofuse", isAttribute = true)
 	private String termsOfUseUrl;
 
-	@XmlAttribute(name = "pubdate", required = false)
+	@JacksonXmlProperty(localName = "pubdate", isAttribute = true)
 	private String pubDate;
 
-	@XmlElement(name = "item", required = false)
+	@JacksonXmlProperty(localName = "item", isAttribute = false)
 	private List<CollectionItem> items;
 
 	private String username;
