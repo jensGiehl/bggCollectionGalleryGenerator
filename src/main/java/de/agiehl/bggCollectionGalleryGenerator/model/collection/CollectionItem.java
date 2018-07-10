@@ -2,41 +2,45 @@ package de.agiehl.bggCollectionGalleryGenerator.model.collection;
 
 import java.util.Objects;
 
-import com.fasterxml.jackson.dataformat.xml.annotation.JacksonXmlProperty;
+import javax.xml.bind.annotation.XmlAccessType;
+import javax.xml.bind.annotation.XmlAccessorType;
+import javax.xml.bind.annotation.XmlAttribute;
+import javax.xml.bind.annotation.XmlElement;
 
+@XmlAccessorType(XmlAccessType.NONE)
 public class CollectionItem {
 
-	@JacksonXmlProperty(localName = "objecttype", isAttribute = true)
+	@XmlAttribute(name = "objecttype", required = false)
 	private String type;
 
-	@JacksonXmlProperty(localName = "objectid", isAttribute = true)
+	@XmlAttribute(name = "objectid", required = true)
 	private int id;
 
-	@JacksonXmlProperty(localName = "subtype", isAttribute = true)
+	@XmlAttribute(name = "subtype", required = false)
 	private String subtype;
 
-	@JacksonXmlProperty(localName = "collid", isAttribute = true)
+	@XmlAttribute(name = "collid", required = false)
 	private long collectionId;
 
-	@JacksonXmlProperty(localName = "name", isAttribute = false)
+	@XmlElement(name = "name", required = false)
 	private String name;
 
-	@JacksonXmlProperty(localName = "yearpublished", isAttribute = false)
-	private Integer year;
+	@XmlElement(name = "yearpublished", required = false)
+	private String year;
 
-	@JacksonXmlProperty(localName = "image", isAttribute = false)
+	@XmlElement(name = "image", required = false)
 	private String imageUrl;
 
-	@JacksonXmlProperty(localName = "thumbnail", isAttribute = false)
+	@XmlElement(name = "thumbnail", required = false)
 	private String thumbnailUrl;
 
-	@JacksonXmlProperty(localName = "status", isAttribute = false)
+	@XmlElement(required = false)
 	private CollectionItemStatus status;
 
-	@JacksonXmlProperty(localName = "numplays", isAttribute = false)
+	@XmlElement(required = false)
 	private int numplays;
 
-	@JacksonXmlProperty(localName = "comment", isAttribute = false)
+	@XmlElement(required = false)
 	private String comment;
 
 	public long getCollectionId() {
@@ -67,7 +71,7 @@ public class CollectionItem {
 		return type;
 	}
 
-	public Integer getYear() {
+	public String getYear() {
 		return year;
 	}
 
@@ -93,10 +97,19 @@ public class CollectionItem {
 		}
 		CollectionItem that = (CollectionItem) o;
 		return id == that.id;
+		/*
+		 * && collectionId == that.collectionId && numplays == that.numplays &&
+		 * Objects.equals(type, that.type) && Objects.equals(subtype, that.subtype) &&
+		 * Objects.equals(name, that.name) && Objects.equals(year, that.year) &&
+		 * Objects.equals(imageUrl, that.imageUrl) && Objects.equals(thumbnailUrl,
+		 * that.thumbnailUrl) && Objects.equals(status, that.status) &&
+		 * Objects.equals(comment, that.comment);
+		 */
 	}
 
 	@Override
 	public int hashCode() {
-		return Objects.hash(type, id, subtype, collectionId, name, year, imageUrl, thumbnailUrl, numplays, comment);
+		return Objects.hash(type, id, subtype, collectionId, name, year, imageUrl, thumbnailUrl, status, numplays,
+				comment);
 	}
 }

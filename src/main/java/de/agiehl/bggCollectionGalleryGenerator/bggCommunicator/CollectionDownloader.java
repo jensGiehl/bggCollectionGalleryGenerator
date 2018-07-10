@@ -1,12 +1,14 @@
 package de.agiehl.bggCollectionGalleryGenerator.bggCommunicator;
 
-import static com.fasterxml.jackson.databind.DeserializationFeature.ACCEPT_EMPTY_STRING_AS_NULL_OBJECT;
-import static com.fasterxml.jackson.databind.DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES;
 import static org.springframework.http.HttpMethod.GET;
 import static org.springframework.http.HttpStatus.ACCEPTED;
 import static org.springframework.http.HttpStatus.OK;
 
-import java.io.IOException;
+import java.io.StringReader;
+
+import javax.xml.bind.JAXBContext;
+import javax.xml.bind.JAXBException;
+import javax.xml.bind.Unmarshaller;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -15,9 +17,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Component;
 import org.springframework.web.client.RestClientException;
 import org.springframework.web.client.RestTemplate;
-
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.dataformat.xml.XmlMapper;
 
 import de.agiehl.bggCollectionGalleryGenerator.model.collection.ErrorObject;
 import de.agiehl.bggCollectionGalleryGenerator.model.collection.UserCollection;
@@ -54,11 +53,12 @@ public class CollectionDownloader {
 		if (response.getStatusCode().equals(ACCEPTED)) {
 			if (retryCount <= maxRetries) {
 				try {
-					ObjectMapper xmlMapper = new XmlMapper();
-					xmlMapper.disable(FAIL_ON_UNKNOWN_PROPERTIES);
-					ErrorObject error = xmlMapper.readValue(response.getBody(), ErrorObject.class);
+					JAXBContext jaxbContext = JAXBContext.newInstance(ErrorObject.class);
+					Unmarshaller unmarshaller = jaxbContext.createUnmarshaller();
+					ErrorObject error = (ErrorObject) unmarshaller.unmarshal(new StringReader(response.getBody()));
+
 					logger.info("Response message form bgg: {}", error.getMessage());
-				} catch (IOException e) {
+				} catch (JAXBException e) {
 					logger.error("Error while converting XML to object: " + response.getBody(), e);
 				}
 				waitForRetry();
@@ -72,12 +72,11 @@ public class CollectionDownloader {
 
 		UserCollection userCollection = null;
 		try {
-			ObjectMapper xmlMapper = new XmlMapper();
-			xmlMapper.disable(FAIL_ON_UNKNOWN_PROPERTIES);
-			xmlMapper.enable(ACCEPT_EMPTY_STRING_AS_NULL_OBJECT);
-			userCollection = xmlMapper.readValue(response.getBody(), UserCollection.class);
+			JAXBContext jaxbContext = JAXBContext.newInstance(UserCollection.class);
+			Unmarshaller unmarshaller = jaxbContext.createUnmarshaller();
+			userCollection = (UserCollection) unmarshaller.unmarshal(new StringReader(response.getBody()));
 			userCollection.setUsername(userName);
-		} catch (IOException e) {
+		} catch (JAXBException e) {
 			logger.error("Error while converting XML to object", e);
 		}
 
