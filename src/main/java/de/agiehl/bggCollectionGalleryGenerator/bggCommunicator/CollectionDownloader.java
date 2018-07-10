@@ -52,15 +52,7 @@ public class CollectionDownloader {
 
 		if (response.getStatusCode().equals(ACCEPTED)) {
 			if (retryCount <= maxRetries) {
-				try {
-					JAXBContext jaxbContext = JAXBContext.newInstance(ErrorObject.class);
-					Unmarshaller unmarshaller = jaxbContext.createUnmarshaller();
-					ErrorObject error = (ErrorObject) unmarshaller.unmarshal(new StringReader(response.getBody()));
-
-					logger.info("Response message form bgg: {}", error.getMessage());
-				} catch (JAXBException e) {
-					logger.error("Error while converting XML to object: " + response.getBody(), e);
-				}
+				logError(response);
 				waitForRetry();
 				return loadUserCollection(userName, retryCount + 1);
 			}
@@ -70,17 +62,33 @@ public class CollectionDownloader {
 			throw new RestClientException(collectionUrl + " could not loaded: " + response.getStatusCode());
 		}
 
+		return convertXmlToObject(userName, response);
+	}
+
+	private UserCollection convertXmlToObject(String userName, ResponseEntity<String> response) {
 		UserCollection userCollection = null;
 		try {
 			JAXBContext jaxbContext = JAXBContext.newInstance(UserCollection.class);
 			Unmarshaller unmarshaller = jaxbContext.createUnmarshaller();
 			userCollection = (UserCollection) unmarshaller.unmarshal(new StringReader(response.getBody()));
+
 			userCollection.setUsername(userName);
 		} catch (JAXBException e) {
 			logger.error("Error while converting XML to object", e);
 		}
-
 		return userCollection;
+	}
+
+	private void logError(ResponseEntity<String> response) {
+		try {
+			JAXBContext jaxbContext = JAXBContext.newInstance(ErrorObject.class);
+			Unmarshaller unmarshaller = jaxbContext.createUnmarshaller();
+			ErrorObject error = (ErrorObject) unmarshaller.unmarshal(new StringReader(response.getBody()));
+
+			logger.info("Response message form bgg: {}", error.getMessage());
+		} catch (JAXBException e) {
+			logger.error("Error while converting XML to object: " + response.getBody(), e);
+		}
 	}
 
 	private void waitForRetry() {

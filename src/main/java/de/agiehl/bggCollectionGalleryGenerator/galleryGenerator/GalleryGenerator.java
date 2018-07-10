@@ -62,7 +62,10 @@ public class GalleryGenerator {
 		Context ctx = new Context(Locale.ENGLISH);
 		ctx.setVariable("username", collection.getUsername());
 		ctx.setVariable("date", collection.getPubDate());
-		ctx.setVariable("collection", getOwnedItems(collection));
+
+		List<CollectionItem> ownedItems = getOwnedItems(collection);
+		ctx.setVariable("collection", ownedItems);
+		logger.info("Found {} owned items", ownedItems.size());
 
 		String htmlAsString = templateEngine.process("gallery.html", ctx);
 		return htmlAsString;
