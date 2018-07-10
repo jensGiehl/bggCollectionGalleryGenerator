@@ -10,3 +10,6 @@ The import configurations are:
 * `ftp.server` - FTP Server (IP/Hostname)
 * `ftp.user` - FTP Username
 * `ftp.password` - FTP Password
+
+## Thanks to
+Thanks to [Sebastian Tschan](https://github.com/blueimp/Gallery) for the gallery project.
