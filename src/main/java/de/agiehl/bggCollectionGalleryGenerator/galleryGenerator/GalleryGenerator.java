@@ -4,6 +4,7 @@ import java.io.File;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.nio.file.Files;
+import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 import java.util.function.Predicate;
@@ -62,6 +63,7 @@ public class GalleryGenerator {
 		Context ctx = new Context(Locale.ENGLISH);
 		ctx.setVariable("username", collection.getUsername());
 		ctx.setVariable("date", collection.getPubDate());
+		ctx.setVariable("createdDate", new Date());
 
 		List<CollectionItem> ownedItems = getOwnedItems(collection);
 		ctx.setVariable("collection", ownedItems);
