@@ -36,9 +36,12 @@ public class FileUploader {
 	@Value("${ftp.targetFile:index.html}")
 	private String targetFileName;
 
+	@Value("${ftp.targetFileThumbnail:thumbnail.html}")
+	private String targetThumbnailFileName;
+
 	private static final Logger logger = LoggerFactory.getLogger(FileUploader.class);
 
-	public void uploadFiles(File htmlFile) {
+	public void uploadFiles(File htmlFile, File thumbnailHtmlFile) {
 		if (!remoteDir.endsWith("/")) {
 			remoteDir += "/";
 		}
@@ -54,6 +57,9 @@ public class FileUploader {
 
 			Resource htmlResource = new FileSystemResource(htmlFile);
 			upload(ftpClient, htmlResource, remoteDir, targetFileName);
+
+			htmlResource = new FileSystemResource(thumbnailHtmlFile);
+			upload(ftpClient, htmlResource, remoteDir, targetThumbnailFileName);
 
 			uploadAllResources(ftpClient, "css");
 			uploadAllResources(ftpClient, "js");

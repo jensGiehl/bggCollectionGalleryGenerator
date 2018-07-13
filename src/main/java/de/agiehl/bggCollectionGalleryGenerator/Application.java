@@ -12,6 +12,7 @@ import org.springframework.util.StringUtils;
 import de.agiehl.bggCollectionGalleryGenerator.bggCommunicator.CollectionDownloader;
 import de.agiehl.bggCollectionGalleryGenerator.ftp.FileUploader;
 import de.agiehl.bggCollectionGalleryGenerator.galleryGenerator.GalleryGenerator;
+import de.agiehl.bggCollectionGalleryGenerator.galleryGenerator.ThumbnailGalleryGenerator;
 import de.agiehl.bggCollectionGalleryGenerator.model.collection.UserCollection;
 
 @SpringBootApplication
@@ -22,6 +23,9 @@ public class Application implements CommandLineRunner {
 
 	@Autowired
 	private GalleryGenerator galleryGenerator;
+
+	@Autowired
+	private ThumbnailGalleryGenerator thumbnailGenerator;
 
 	@Autowired
 	private FileUploader fileUploader;
@@ -40,7 +44,9 @@ public class Application implements CommandLineRunner {
 
 		File generatedGalleryHtml = galleryGenerator.generateHtmlForCollection(userCollections);
 
-		fileUploader.uploadFiles(generatedGalleryHtml);
+		File generatedThumnailGalleryHtml = thumbnailGenerator.generateHtmlForCollection(userCollections);
+
+		fileUploader.uploadFiles(generatedGalleryHtml, generatedThumnailGalleryHtml);
 	}
 
 	public static void main(String[] args) {
